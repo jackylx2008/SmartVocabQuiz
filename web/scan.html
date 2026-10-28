@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <title>SmartVocabQuiz · 本地词库</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/ai-status.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="SmartVocabQuiz 首页">
+        <span class="brand-mark" aria-hidden="true">V<span>·</span></span>
+        <span class="brand-copy"><strong>SmartVocabQuiz</strong><small>本地词库工作台</small></span>
+      </a>
+      <nav class="top-nav" aria-label="页面导航"><a class="back-link" href="/">← 功能选择</a><span class="local-badge"><span class="badge-dot"></span> 仅在本机运行</span><button id="ai-status" class="ai-indicator checking" type="button" title="点击重新检测本地 AI"><span class="ai-dot"></span><span class="ai-label">AI 检测中</span></button></nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">SCAN · ORGANIZE · LEARN</p>
+          <h1 id="hero-title">让每一页扫描件，<br><em>变成可用的词汇。</em></h1>
+          <p class="hero-description">在页面添加 PDF，或把文件放进 <code>BookScan</code> 再点击扫描。系统按文件内容计算 SHA-256，只识别尚未记录的扫描件。</p>
+          <div class="hero-actions">
+            <button id="scan-button" class="primary-button" type="button"><span class="button-icon" aria-hidden="true">✦</span> 扫描新增 PDF</button>
+            <button id="upload-button" class="secondary-button" type="button">添加 PDF <span aria-hidden="true">＋</span></button>
+            <a class="text-button" href="/download/vocabulary.json">下载词库 JSON <span aria-hidden="true">↗</span></a>
+            <input id="upload-input" class="sr-only" type="file" accept=".pdf,application/pdf" multiple>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orbit orbit-outer"></div><div class="orbit orbit-inner"></div>
+          <div class="card card-back"><span>word</span><strong>knowledge</strong><small>知识</small></div>
+          <div class="card card-front"><span>01 / VOCABULARY</span><strong>discover</strong><small>发现 · 探索</small><i></i></div>
+          <div class="spark spark-one">✦</div><div class="spark spark-two">✧</div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="词库概况">
+        <div class="stat"><span>词条总数</span><strong id="stat-entries">—</strong><small>去重后的英文与中文配对</small></div>
+        <div class="stat"><span>已扫描 PDF</span><strong id="stat-scanned">—</strong><small>按文件哈希记录</small></div>
+        <div class="stat"><span>待扫描 PDF</span><strong id="stat-pending">—</strong><small>新增或内容发生变化</small></div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="panel scan-panel">
+          <div class="panel-heading"><div><p class="section-kicker">SCAN STATUS</p><h2>扫描进度</h2></div><span id="job-pill" class="status-pill idle">就绪</span></div>
+          <div class="progress-visual" aria-hidden="true"><div id="progress-fill"></div></div>
+          <p id="job-message" class="job-message" role="status" aria-live="polite">正在读取本地扫描记录…</p>
+          <div class="scan-note"><span class="note-icon">i</span><p>重复打开页面或再次点击扫描不会重做已记录的 PDF。添加 PDF 后会自动开始识别。</p></div>
+        </div>
+
+        <div class="panel files-panel">
+          <div class="panel-heading"><div><p class="section-kicker">SOURCE FILES</p><h2>扫描件</h2></div><span id="file-count" class="count-chip">0 份</span></div>
+          <div id="file-list" class="file-list"><p class="empty-state">正在读取 PDF…</p></div>
+        </div>
+      </section>
+
+      <section class="panel vocabulary-panel" aria-labelledby="vocab-title">
+        <div class="vocab-heading">
+          <div><p class="section-kicker">YOUR VOCABULARY</p><h2 id="vocab-title">词汇预览</h2><p>直接检索已识别的英文或中文解释。</p></div>
+          <label class="search-field"><span aria-hidden="true">⌕</span><span class="sr-only">搜索词汇</span><input id="search-input" type="search" placeholder="搜索单词或中文释义" autocomplete="off"></label>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>英文词条</th><th>中文解释</th><th>来源</th></tr></thead><tbody id="vocab-body"></tbody></table></div>
+        <p id="vocab-summary" class="vocab-summary">正在载入词库…</p>
+      </section>
+    </main>
+    <footer><span>SmartVocabQuiz</span><span>本地数据 · 本地 AI · 由你掌控</span></footer>
+  </div>
+</body>
+</html>

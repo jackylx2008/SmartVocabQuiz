@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <title>SmartVocabQuiz · 功能选择</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/ai-status.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="SmartVocabQuiz 首页">
+        <span class="brand-mark" aria-hidden="true">V<span>·</span></span>
+        <span class="brand-copy"><strong>SmartVocabQuiz</strong><small>本地词汇学习工作台</small></span>
+      </a>
+      <div class="header-controls"><span class="local-badge"><span class="badge-dot"></span> 仅在本机运行</span><button id="ai-status" class="ai-indicator checking" type="button" title="点击重新检测本地 AI"><span class="ai-dot"></span><span class="ai-label">AI 检测中</span></button></div>
+    </header>
+
+    <main class="home-main">
+      <section class="home-intro" aria-labelledby="home-title">
+        <p class="eyebrow">YOUR LEARNING DESK</p>
+        <h1 id="home-title">从扫描词汇开始，<br><em>把学习安排得更清楚。</em></h1>
+        <p>选择接下来要做的事。词汇扫描已经可以使用，试题功能会在后续版本加入。</p>
+      </section>
+
+      <section class="choice-grid" aria-label="选择功能">
+        <article class="choice-card scan-choice">
+          <div class="choice-top"><span class="choice-number">01 / VOCABULARY</span><span class="choice-icon" aria-hidden="true">✦</span></div>
+          <div class="choice-illustration" aria-hidden="true"><span>hello</span><span>你好</span><i></i></div>
+          <div class="choice-content">
+            <span class="choice-label available">已开放</span>
+            <h2>扫描词汇</h2>
+            <p>添加英语教材 PDF，识别英文词条和中文解释，持续扩充本地词库。</p>
+            <a class="choice-button" href="/scan" data-requires-ai>扫描词汇 <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="choice-card quiz-choice">
+          <div class="choice-top"><span class="choice-number">02 / PRACTICE</span><span class="choice-icon quiz-icon" aria-hidden="true">✎</span></div>
+          <div class="choice-illustration quiz-illustration" aria-hidden="true"><span>A&nbsp; B&nbsp; C</span><span>练习 · 复习</span><i></i></div>
+          <div class="choice-content">
+            <span class="choice-label upcoming">即将推出</span>
+            <h2>生成试题</h2>
+            <p>未来将从已经识别的词库抽取英文单词，在这里生成练习题。</p>
+            <a class="choice-button quiz-button" href="/quiz" data-requires-ai aria-label="生成试题（功能尚未实现）">生成试题 <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <dialog id="ai-required-dialog" class="ai-dialog" aria-labelledby="ai-dialog-title">
+      <button id="ai-dialog-close" class="dialog-close" type="button" aria-label="关闭提示">×</button>
+      <div class="dialog-icon" aria-hidden="true">!</div>
+      <h2 id="ai-dialog-title">需要启动本地 AI</h2>
+      <p>当前本地 AI 服务或配置模型不可用。请先启动本地 AI，再点击重新检测。</p>
+      <div class="dialog-actions"><button id="ai-dialog-retry" class="primary-button" type="button">重新检测</button><button id="ai-dialog-cancel" class="secondary-button" type="button">稍后再说</button></div>
+    </dialog>
+
+    <footer><span>SmartVocabQuiz</span><span>本地数据 · 本地 AI · 由你掌控</span></footer>
+  </div>
+</body>
+</html>

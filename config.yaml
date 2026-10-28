@@ -1,0 +1,21 @@
+app:
+  log_level: INFO
+  input_dir: BookScan
+  output_file: output/vocabulary.json
+  scan_record_file: output/scan_manifest.json
+
+web:
+  port: 0
+
+llamacpp:
+  base_url: ${LLAMACPP_BASE_URL:-http://127.0.0.1:8080/v1}
+  model: ${LLAMACPP_MODEL:-local-model}
+  api_key: ${LLAMACPP_API_KEY:-}
+  timeout_seconds: 600
+  max_tokens: 4096
+
+flows:
+  scan_vocabulary:
+    render_scale: 2.5
+    image_quality: 90
+    retries: 2

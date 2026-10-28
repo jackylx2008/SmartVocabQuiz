@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.venv/
+common.env
+*.env
+BookScan/
+logs/
+output/
+tmp/
+vendor/
+docs/LOCAL_AI_RUNTIME_SETUP.md
+*.pyc
