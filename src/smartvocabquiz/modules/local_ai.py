@@ -74,6 +74,40 @@ class LocalAIClient:
                 clean.append({"english": english.strip(), "chinese": chinese.strip()})
         return clean
 
+    def generate_task(self, system_prompt: str, task_type: str,
+                      vocab_list: list[dict[str, str]], count: int,
+                      excluded_words: list[str], feedback: str = "") -> dict[str, Any]:
+        """按一个题型请求结构化试题；调用方负责校验和打乱。"""
+        body: dict[str, Any] = {
+            "model": self.model,
+            "temperature": 0.35,
+            "max_tokens": self.max_tokens,
+            "stream": False,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": json.dumps({
+                    "task_type": task_type,
+                    "item_count": count,
+                    "vocab_list": vocab_list,
+                    "avoid_answer_words": excluded_words,
+                    "previous_validation_error": feedback,
+                    "request": "只生成指定题型和指定数量。所有答案及选项必须来自 vocab_list，答案不要重复。仅返回 JSON。",
+                }, ensure_ascii=False)},
+            ],
+        }
+        response = self.session.post(f"{self.base_url}/chat/completions", json=body,
+                                     timeout=self.timeout)
+        response.raise_for_status()
+        choice = response.json()["choices"][0]
+        if choice.get("finish_reason") == "length":
+            raise ValueError("出题结果超过 max_tokens")
+        content = choice["message"].get("content")
+        if isinstance(content, list):
+            content = "".join(item.get("text", "") for item in content if isinstance(item, dict))
+        if not isinstance(content, str):
+            raise ValueError("模型未返回出题文本")
+        return _parse_json(content)
+
 
 def _parse_json(content: str) -> dict[str, Any]:
     text = content.strip()

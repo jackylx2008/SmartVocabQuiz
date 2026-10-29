@@ -1,6 +1,6 @@
 # 本地 AI 配置
 
-本项目连接用户已经启动的 OpenAI 兼容视觉模型服务。它不会启动、停止或重新配置本地 AI 进程。
+本项目连接用户已经启动的 OpenAI 兼容模型服务，用于 PDF 视觉识别和词汇出题。它不会启动、停止或重新配置本地 AI 进程。
 
 ## 配置
 
@@ -20,9 +20,11 @@ LLAMACPP_API_KEY=
 
 扫描新增 PDF 时才向 `/v1/chat/completions` 发送图片识别请求。已登记 SHA-256 的 PDF 不会重复识别。扫描结果保存在 `output/vocabulary.json`，记录保存在 `output/scan_manifest.json`。
 
+生成试题时，程序先检查服务可用。需要模型生成的题型分别向 `/v1/chat/completions` 发送词库和该题型的出题规范片段；中英配对直接使用词库释义。试卷保存在 `output/quizzes/`。服务不可用时只报告错误，不尝试启动服务。
+
 ## 排查
 
 1. 检查服务是否已在 `LLAMACPP_BASE_URL` 对应地址运行。
 2. 检查 `LLAMACPP_MODEL` 是否与服务模型列表一致。
 3. 如模型列表返回认证错误，检查 `LLAMACPP_API_KEY`。
-4. 查看 `logs/smart-vocab-quiz.log` 中的扫描错误；日志不会记录 API Key。
+4. 查看 `logs/smart-vocab-quiz.log` 中的扫描或出题错误；日志不会记录 API Key。

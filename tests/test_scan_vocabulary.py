@@ -156,7 +156,7 @@ class ScanVocabularyTest(unittest.TestCase):
                 page = urlopen(base + "/scan").read().decode("utf-8")
                 self.assertIn("扫描新增 PDF", page)
                 quiz = urlopen(base + "/quiz").read().decode("utf-8")
-                self.assertIn("试题功能尚未实现", quiz)
+                self.assertIn("生成新试卷", quiz)
                 self.assertEqual(ai.calls, 0)
                 original_pdf = (input_dir / "one.pdf").read_bytes()
                 upload = Request(base + "/api/upload", data=original_pdf, method="POST",

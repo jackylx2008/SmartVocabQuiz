@@ -4,9 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f5ef">
-  <title>SmartVocabQuiz · 生成试题</title>
+  <title>SmartVocabQuiz · 审核试题</title>
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/quiz.css">
   <script src="/ai-status.js" defer></script>
+  <script src="/quiz.js" defer></script>
 </head>
 <body>
   <div class="page-shell">
@@ -18,14 +20,26 @@
       <nav class="top-nav" aria-label="页面导航"><a class="back-link" href="/">← 功能选择</a><span class="local-badge"><span class="badge-dot"></span> 仅在本机运行</span><button id="ai-status" class="ai-indicator checking" type="button" title="点击重新检测本地 AI"><span class="ai-dot"></span><span class="ai-label">AI 检测中</span></button></nav>
     </header>
 
-    <main class="quiz-main">
-      <section class="quiz-placeholder" aria-labelledby="quiz-title">
-        <div class="quiz-emblem" aria-hidden="true">✎</div>
-        <p class="eyebrow">COMING NEXT · PRACTICE</p>
-        <h1 id="quiz-title">生成试题</h1>
-        <p class="quiz-lead">试题功能尚未实现。</p>
-        <p class="quiz-description">入口已经预留。后续会使用本地词库抽取英文单词，并在这里完成出题和练习。</p>
-        <div class="quiz-actions"><a class="primary-button" href="/scan">前往扫描词汇 <span aria-hidden="true">↗</span></a><a class="secondary-button" href="/">返回功能选择</a></div>
+    <main class="quiz-workspace">
+      <section class="quiz-intro">
+        <p class="eyebrow">REVIEW · SELECT · EXPORT</p>
+        <h1>审核每一道题，<span>再交给学生。</span></h1>
+        <p>这里是家长和教师的审核台。逐题确认，通过后保存为备选题；不合适的题目可单独重出。最后勾选已审核题目，导出供纸笔作答的大字 A4 横版 PDF。</p>
+        <div class="quiz-toolbar">
+          <button id="generate-quiz" class="primary-button" type="button">生成新试卷 <span aria-hidden="true">↗</span></button>
+        </div>
+        <p id="quiz-status" class="quiz-status" role="status">正在读取待审核试卷…</p>
+      </section>
+
+      <section id="quiz-paper" class="quiz-paper" hidden>
+        <div class="paper-heading"><div><p class="section-kicker">TEACHER REVIEW</p><h2>待审核试题</h2><p>逐题核对题意、答案与用词</p></div><div class="review-count" id="review-count"></div></div>
+        <div id="quiz-form"></div>
+      </section>
+
+      <section class="candidate-panel" id="candidate-panel">
+        <div class="candidate-heading"><div><p class="section-kicker">APPROVED QUESTION BANK</p><h2>已审核备选题</h2><p>勾选想放进学生试卷的题目；选择会保存在本机。</p></div><strong id="selected-count">0 题已选</strong></div>
+        <div id="candidate-list" class="candidate-list"></div>
+        <div class="candidate-actions"><button id="export-pdf" class="primary-button" type="button" disabled>导出 A4 横版 PDF <span aria-hidden="true">↗</span></button><span id="export-status" role="status"></span></div>
       </section>
     </main>
 
